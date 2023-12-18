@@ -1,4 +1,3 @@
-
 """
     connect signals from the master instrument datasheet(dataframe) to the master data frame.
 
@@ -73,40 +72,39 @@
             #8 - com (not used)                                   #
             #9 - item reference                                   #
             #10 Tag number ---                                    #
-            #11 equipment - Well TH11                             #
-            #12 parameter like Pressure, Level                    #
-            #13 line (pipe) or branch number                      #
-            #14 LINE SIZE (mm) like 300mm                         #
-            #15 line spec (not sure what this is )                #
-            #16 service like condensate or LP two phase           #
-            #17 minpressure - 0bar or full                        #
-            #18 max pressure                                      #
-            #19 min temperature                                   #
-            #20 max temperature                                   #
-            #21 min flow                                          #
-            #22 max flow                                          #
-            #23 Units like Bar(g)                                 #
-            #24 instrument range                                  #
-            #25 Operating value                                   #
-            #26 calibrated range                                  #
-            #27 Instalation drawing                               #
-            #28 datasheet                                         #
-            #29 P&ID drawing number                               #
-            #30 notes about installation                          #
-            #31 revision                                          #
-            #32 Vendor                                            #
-            #33 make                                              #
-            #34 model of device                                   #
-            #35 PO number                                         #
-            #36 recieved date                                     #
-            #37 failsafe                                          #
+            #15 equipment - Well TH11                             #
+            #16 parameter like Pressure, Level                    #
+            #17 line (pipe) or branch number                      #
+            #18 LINE SIZE (mm) like 300mm                         #
+            #19 line spec (not sure what this is )                #
+            #20 service like condensate or LP two phase           #
+            #21 minpressure - 0bar or full                        #
+            #22 max pressure                                      #
+            #23 min temperature                                   #
+            #24 max temperature                                   #
+            #25 min flow                                          #
+            #26 max flow                                          #
+            #27 Units like Bar(g)                                 #
+            #28 instrument range                                  #
+            #29 Operating value                                   #
+            #30 calibrated range                                  #
+            #31 Installation drawing                               #
+            #32 datasheet                                         #
+            #33 P&ID drawing number                               #
+            #34 notes about installation                          #
+            #35 revision                                          #
+            #36 Vendor                                            #
+            #37 make                                              #
+            #38 model of device                                   #
+            #39 PO number                                         #
+            #40 received date                                     #
+            #41 failsafe                                          #
 """
-# from nis import match
-
+import datetime as dt
 
 def station_name(master_database_list, database_list_index, name):
     """
-    Station Name = name
+    #0 Station Name = name
     :param master_database_list:
     :param database_list_index:
     :param name: the name of the station
@@ -115,9 +113,10 @@ def station_name(master_database_list, database_list_index, name):
     master_database_list.iat[database_list_index, 0] = name
     return master_database_list
 
+
 def system_name(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    System = System
+    #1 System = System
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -125,13 +124,14 @@ def system_name(master_database_list, database_list_index, master_instrument_lis
     :return: master_database_list with the system name set from the master instrument list
     """
     master_database_list.iat[database_list_index, 1] = \
-    master_instrument_list.iloc[instrument_list_index, 3]
+        master_instrument_list.iloc[instrument_list_index, 3]
     return master_database_list
 
 
 def tag(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    Tag = System + ISA ID + EQ
+
+    #2 Tag = #4 System +#5 ISA ID +#7 EQ
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -139,16 +139,16 @@ def tag(master_database_list, database_list_index, master_instrument_list, instr
     :return: master_database with its tag configured
     """
     master_database_list.iat[database_list_index, 2] = \
-    str(master_instrument_list.iloc[instrument_list_index, 4]) + \
-    master_instrument_list.iloc[instrument_list_index, 5] + \
-    str(master_instrument_list.iloc[instrument_list_index, 7])
+        str(master_instrument_list.iloc[instrument_list_index, 4]) + \
+        master_instrument_list.iloc[instrument_list_index, 5] + \
+        str(master_instrument_list.iloc[instrument_list_index, 7])
 
     return master_database_list
 
 
 def point_name(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    Point name = Equipment
+    #3 Point name =#15 Equipment
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -157,13 +157,14 @@ def point_name(master_database_list, database_list_index, master_instrument_list
     """
 
     master_database_list.iat[database_list_index, 3] = \
-    master_instrument_list.iloc[instrument_list_index, 11]
+        master_instrument_list.iloc[instrument_list_index, 15]
 
     return master_database_list
 
+
 def function(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    Function = Parameter
+    #4 Function = #16 Parameter
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -172,14 +173,15 @@ def function(master_database_list, database_list_index, master_instrument_list, 
     """
 
     master_database_list.iat[database_list_index, 4] = \
-    master_instrument_list.iloc[instrument_list_index, 12]
+        master_instrument_list.iloc[instrument_list_index, 16]
 
     return master_database_list
 
-def type(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+
+def device_model(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
 
-    #5 Type = #34 Model of Device
+    #5 Type = #38 Model of Device
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -188,13 +190,14 @@ def type(master_database_list, database_list_index, master_instrument_list, inst
     """
 
     master_database_list.iat[database_list_index, 5] = \
-    master_instrument_list.iloc[instrument_list_index, 34]
+        master_instrument_list.iloc[instrument_list_index, 38]
 
     return master_database_list
 
+
 def criticality(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
     """
-    # criticality = ?
+    #6 criticality = ?
     does nothing at present
     :param master_database_list:
     :param database_list_index:
@@ -213,7 +216,7 @@ def criticality(master_database_list, database_list_index, master_instrument_lis
 
 def resource_consent(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
     """
-    # resource concent = ?
+    #7 resource concent = ?
     does nothing at present
     :param master_database_list:
     :param database_list_index:
@@ -232,7 +235,8 @@ def resource_consent(master_database_list, database_list_index, master_instrumen
 
 def pcpr(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
     """
-    # PCPR = ?
+    Could be used for SIS
+    #8 PCPR = ?
     does nothing at present
     :param master_database_list:
     :param database_list_index:
@@ -240,35 +244,36 @@ def pcpr(master_database_list, database_list_index, master_instrument_list, inst
     :param instrument_list_index:
     :param val: = Yes/No depending on the criticality
     :return: master database list
-    TODO Implement criticality calculation
     """
-    pass
-    # master_database_list.iat[database_list_index, 6] = \
+
+    master_database_list.iat[database_list_index, 8] = 'NO'
     # master_instrument_list.iloc[instrument_list_index, ]
 
     return master_database_list
+
 
 def kpi(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
     """
-    # kpi = ?
+    #9 kpi = ?
     does nothing at present
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
     :param instrument_list_index:
-    :param val: = Yes/No depending on the criticality
+    :param val: = Yes/No
     :return: master database list
     TODO Implement criticality calculation
     """
     pass
-    # master_database_list.iat[database_list_index, 6] = \
-    # master_instrument_list.iloc[instrument_list_index, ]
+    master_database_list.iat[database_list_index, 9] = ''
+
 
     return master_database_list
 
+
 def nominal_operating_value(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    #10 Nominal operating value = #25 operating value
+    #10 Nominal operating value = #29 operating value
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -277,13 +282,14 @@ def nominal_operating_value(master_database_list, database_list_index, master_in
     """
 
     master_database_list.iat[database_list_index, 10] = \
-    master_instrument_list.iloc[instrument_list_index, 25]
+        master_instrument_list.iloc[instrument_list_index, 29]
 
     return master_database_list
 
+
 def setting_range(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    #11 Nominal operating value = #26 operating value
+    #11 Nominal operating value = #23 operating value
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -292,13 +298,14 @@ def setting_range(master_database_list, database_list_index, master_instrument_l
     """
 
     master_database_list.iat[database_list_index, 11] = \
-    master_instrument_list.iloc[instrument_list_index, 26]
+        master_instrument_list.iloc[instrument_list_index, 30]
 
     return master_database_list
 
+
 def device_range(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    #12 device range = #24 Instrument range
+    #12 device range = #28 Instrument range
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -307,23 +314,24 @@ def device_range(master_database_list, database_list_index, master_instrument_li
     """
 
     master_database_list.iat[database_list_index, 12] = \
-    master_instrument_list.iloc[instrument_list_index, 24]
+        master_instrument_list.iloc[instrument_list_index, 28]
 
     return master_database_list
 
+
 def device_type(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
-    #13 device range = #34 Instrument range
+    #13 device type = use what was filled in
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
     :param instrument_list_index:
     :return: master database list with the instrument range set
-    TODO need to fix this device type is a number to a table that has a list of devices
+
     """
     pass
-    #master_database_list.iat[database_list_index, 13] = \
-    #master_instrument_list.iloc[instrument_list_index, ]
+    # master_database_list.iat[database_list_index, 13] = \
+    # master_instrument_list.iloc[instrument_list_index, ]
 
     return master_database_list
 
@@ -340,12 +348,117 @@ def device_proof(master_database_list, database_list_index, master_instrument_li
     TODO need to fix this device type is a number to a table that has a list of devices
     """
 
-    # match master_instrument_list.iloc[instrument_list_index,31]:
-    #     case '':
-    #         master_database_list.iat[database_list_index, 14] = '+/- 2.5%'
-    #     case '':
-    #         print()
+    match master_instrument_list.iloc[instrument_list_index, 31]:
+        case '':
+            master_database_list.iat[database_list_index, 14] = '+/- 2.5%'
+        case '':
+            print()
+
+    return master_database_list
+def plant_code(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #15 plant code =
+    This fuction does nothing and is here for a future feature
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database, with no changes
+
+    """
+    pass
+    # master_database_list.iat[database_list_index, 13] = \
+    # master_instrument_list.iloc[instrument_list_index, ]
+
+    return master_database_list
+
+def data(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #16 data = #32 datasheet
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with datasheet
+    """
+
+    master_database_list.iat[database_list_index, 16] = \
+        master_instrument_list.iloc[instrument_list_index, 32]
+
+    return master_database_list
+def order(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #17 store number = #39 purchase order number
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with drawing number set
+    """
+
+    master_database_list.iat[database_list_index, 17] = \
+        'PO# ' + str(master_instrument_list.iloc[instrument_list_index, 39])
+
+    return master_database_list
+def drawg(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #18 drawing # = #33 pid drawing
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with drawing number set
+    """
+
+    master_database_list.iat[database_list_index, 18] = \
+        master_instrument_list.iloc[instrument_list_index, 33]
+
+    return master_database_list
+def notes(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #19 notes to tester = 'rev:' + #35 /n
+                          'make:' + #37 /n
+                          'install:' + #34 /n
+                          'drwg:' + #31 /n
 
 
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return:
+    """
+
+    master_database_list.iat[database_list_index, 19]='rev: ' +\
+       str(master_instrument_list.iloc[instrument_list_index, 35]) + ' \nmake: ' + \
+       str(master_instrument_list.iloc[instrument_list_index, 37]) + ' \ninstall: ' + \
+       str(master_instrument_list.iloc[instrument_list_index, 34]) + ' \ndrwg: ' + \
+       str(master_instrument_list.iloc[instrument_list_index, 31])
+
+    return master_database_list
+def date(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+    """
+    #48 date
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with date set
+    """
+
+    master_database_list.iat[database_list_index, 48] = dt.datetime.now()
+
+    return master_database_list
+def who(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
+    """
+    #49 who updated
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with whom upated
+    """
+
+    master_database_list.iat[database_list_index, 49] = val
 
     return master_database_list
