@@ -446,7 +446,7 @@ def date(master_database_list, database_list_index, master_instrument_list, inst
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 48] = dt.date.now()
+    master_database_list.iat[database_list_index, 48] = dt.date.today()
 
     return master_database_list
 def who(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
