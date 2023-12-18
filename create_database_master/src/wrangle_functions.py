@@ -102,6 +102,7 @@
 """
 import datetime as dt
 
+
 def station_name(master_database_list, database_list_index, name):
     """
     #0 Station Name = name
@@ -114,17 +115,22 @@ def station_name(master_database_list, database_list_index, name):
     return master_database_list
 
 
-def system_name(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+def system_name(master_database_list, database_list_index, master_instrument_list, kks_systems, instrument_list_index):
     """
     #1 System = System
+    :param kks_systems: a dictionary of kks systems descriptions (ADA, ADB, .. ect)
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
     :param instrument_list_index:
     :return: master_database_list with the system name set from the master instrument list
     """
+
+    kks_code = master_instrument_list.iloc[instrument_list_index, 3][1:]
     master_database_list.iat[database_list_index, 1] = \
-        master_instrument_list.iloc[instrument_list_index, 3]
+        str(master_instrument_list.iloc[instrument_list_index, 15]) + ' ' + \
+        kks_systems[kks_code]
+
     return master_database_list
 
 
@@ -157,7 +163,8 @@ def point_name(master_database_list, database_list_index, master_instrument_list
     """
 
     master_database_list.iat[database_list_index, 3] = \
-        master_instrument_list.iloc[instrument_list_index, 15]
+        str(master_instrument_list.iloc[instrument_list_index, 15]) + " " + \
+        str(master_instrument_list.iloc[instrument_list_index, 16])
 
     return master_database_list
 
@@ -171,9 +178,9 @@ def function(master_database_list, database_list_index, master_instrument_list, 
     :param instrument_list_index:
     :return:
     """
-
-    master_database_list.iat[database_list_index, 4] = \
-        master_instrument_list.iloc[instrument_list_index, 16]
+    pass
+    # master_database_list.iat[database_list_index, 4] = \
+    #     master_instrument_list.iloc[instrument_list_index, 16]
 
     return master_database_list
 
@@ -267,7 +274,6 @@ def kpi(master_database_list, database_list_index, master_instrument_list, instr
     pass
     master_database_list.iat[database_list_index, 9] = ''
 
-
     return master_database_list
 
 
@@ -355,6 +361,8 @@ def device_proof(master_database_list, database_list_index, master_instrument_li
             print()
 
     return master_database_list
+
+
 def plant_code(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #15 plant code =
@@ -372,6 +380,7 @@ def plant_code(master_database_list, database_list_index, master_instrument_list
 
     return master_database_list
 
+
 def data(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #16 data = #32 datasheet
@@ -386,6 +395,8 @@ def data(master_database_list, database_list_index, master_instrument_list, inst
         master_instrument_list.iloc[instrument_list_index, 32]
 
     return master_database_list
+
+
 def order(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #17 store number = #39 purchase order number
@@ -400,6 +411,8 @@ def order(master_database_list, database_list_index, master_instrument_list, ins
         'PO# ' + str(master_instrument_list.iloc[instrument_list_index, 39])
 
     return master_database_list
+
+
 def drawg(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #18 drawing # = #33 pid drawing
@@ -414,6 +427,8 @@ def drawg(master_database_list, database_list_index, master_instrument_list, ins
         master_instrument_list.iloc[instrument_list_index, 33]
 
     return master_database_list
+
+
 def notes(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #19 notes to tester = 'rev:' + #35 /n
@@ -429,13 +444,18 @@ def notes(master_database_list, database_list_index, master_instrument_list, ins
     :return:
     """
 
-    master_database_list.iat[database_list_index, 19]='rev: ' +\
-       str(master_instrument_list.iloc[instrument_list_index, 35]) + ' \nmake: ' + \
-       str(master_instrument_list.iloc[instrument_list_index, 37]) + ' \ninstall: ' + \
-       str(master_instrument_list.iloc[instrument_list_index, 34]) + ' \ndrwg: ' + \
-       str(master_instrument_list.iloc[instrument_list_index, 31])
+    master_database_list.iat[database_list_index, 19] = 'rev: ' + \
+                                                        str(master_instrument_list.iloc[
+                                                                instrument_list_index, 35]) + ' \nmake: ' + \
+                                                        str(master_instrument_list.iloc[
+                                                                instrument_list_index, 37]) + ' \ninstall: ' + \
+                                                        str(master_instrument_list.iloc[
+                                                                instrument_list_index, 34]) + ' \ndrwg: ' + \
+                                                        str(master_instrument_list.iloc[instrument_list_index, 31])
 
     return master_database_list
+
+
 def date(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #48 date
@@ -449,6 +469,8 @@ def date(master_database_list, database_list_index, master_instrument_list, inst
     master_database_list.iat[database_list_index, 48] = dt.date.today()
 
     return master_database_list
+
+
 def who(master_database_list, database_list_index, master_instrument_list, instrument_list_index, val):
     """
     #49 who updated

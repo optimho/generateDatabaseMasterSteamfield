@@ -7,10 +7,10 @@ for Contact Energy's device database.
 
 import numpy as np
 import pandas as pd
-from create_database_master.src import wrangle_configuration as connect
+from create_database_master.src import wrangle_functions as connect
 
 
-def wrangle_database_list(master_list: pd, database_list: pd, version: str):
+def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict, version: str):
     # Takes the new instrument lists, checks the exsisting database lists
     # compiles a new lists with data from both lists and presents the data in a format that
     # can easily be used to import into the new instrument database
@@ -37,12 +37,12 @@ def wrangle_database_list(master_list: pd, database_list: pd, version: str):
 
                 ######## WRANGLE DATA HERE ###########  TODO      ###########################################
                 #
-                # Station Name
+                # 0 Station Name
                 connect.station_name(master_database_list, database_list_index,
                                      name="Tauhara B Steamfield")
 
                 # 1 System
-                connect.system_name(master_database_list, database_list_index, master_instrument_list,
+                connect.system_name(master_database_list, database_list_index, master_instrument_list, kks_systems,
                                     instrument_list_index)
 
                 # 2 Tag
@@ -115,14 +115,13 @@ def wrangle_database_list(master_list: pd, database_list: pd, version: str):
                 # 19 test notes:
                 connect.notes(master_database_list, database_list_index, master_instrument_list,
                               instrument_list_index)
-                #48 date of update:
+                # 48 date of update:
                 connect.date(master_database_list, database_list_index, master_instrument_list,
-                              instrument_list_index)
+                             instrument_list_index)
 
-                #48 updater:
+                # 48 updater:
                 connect.who(master_database_list, database_list_index, master_instrument_list,
-                              instrument_list_index, 'MduP')
-
+                            instrument_list_index, 'RF & MduP')
 
                 # master_database_list.iat[database_list_index, 49] = master_instrument_list.iat[instrument_list_index, 1]
 
@@ -151,6 +150,92 @@ def wrangle_database_list(master_list: pd, database_list: pd, version: str):
 
                 # print(f'ADD This to Database List --{instrument_list_index} Updates')
                 device_is_listed = True
-                ##TODO add master lists item to the the database lists
+
+                ##Update Master lists item to the the database lists
+                # 0 Station Name
+                connect.station_name(master_database_list, database_list_index,
+                                     name="Tauhara B Steamfield")
+
+                # 1 System
+                connect.system_name(master_database_list, database_list_index, master_instrument_list, kks_systems,
+                                    instrument_list_index)
+
+                # 2 Tag
+                connect.tag(master_database_list, database_list_index, master_instrument_list,
+                            instrument_list_index)
+
+                # 3 Point name
+                connect.point_name(master_database_list, database_list_index, master_instrument_list,
+                                   instrument_list_index)
+
+                # 4 Function
+                connect.function(master_database_list, database_list_index, master_instrument_list,
+                                 instrument_list_index)
+
+                # 5 Type
+                connect.device_model(master_database_list, database_list_index, master_instrument_list,
+                                     instrument_list_index)
+
+                # 6 criticality = ? not yet implemented
+                connect.criticality(master_database_list, database_list_index, master_instrument_list,
+                                    instrument_list_index, val="")
+
+                # 7 Resource Consent = ? not yet implemented
+                connect.resource_consent(master_database_list, database_list_index, master_instrument_list,
+                                         instrument_list_index, val="")
+
+                # 8 PCPR = ? not yet implemented
+                connect.pcpr(master_database_list, database_list_index, master_instrument_list,
+                             instrument_list_index, val="")
+
+                # 9 KPI = ? not implemented yet
+                connect.kpi(master_database_list, database_list_index, master_instrument_list,
+                            instrument_list_index, val="")
+
+                # 10 Nominal operating value
+                connect.nominal_operating_value(master_database_list, database_list_index, master_instrument_list,
+                                                instrument_list_index)
+
+                # 11 setting range
+                connect.setting_range(master_database_list, database_list_index, master_instrument_list,
+                                      instrument_list_index)
+
+                # 12 Device range
+                connect.device_range(master_database_list, database_list_index, master_instrument_list,
+                                     instrument_list_index)
+
+                # 13 Device Type TODO: this needs work
+                connect.device_type(master_database_list, database_list_index, master_instrument_list,
+                                    instrument_list_index)
+
+                # 14 Device proof TODO: this needs work
+                connect.device_proof(master_database_list, database_list_index, master_instrument_list,
+                                     instrument_list_index)
+
+                # 15 plant code (KKS):
+                connect.plant_code(master_database_list, database_list_index, master_instrument_list,
+                                   instrument_list_index)
+
+                # 16 data:
+                connect.data(master_database_list, database_list_index, master_instrument_list,
+                             instrument_list_index)
+
+                # 17 store number:
+                connect.order(master_database_list, database_list_index, master_instrument_list,
+                              instrument_list_index)
+
+                # 18 drawin number:
+                connect.drawg(master_database_list, database_list_index, master_instrument_list,
+                              instrument_list_index)
+                # 19 test notes:
+                connect.notes(master_database_list, database_list_index, master_instrument_list,
+                              instrument_list_index)
+                # 48 date of update:
+                connect.date(master_database_list, database_list_index, master_instrument_list,
+                             instrument_list_index)
+
+                # 48 updater:
+                connect.who(master_database_list, database_list_index, master_instrument_list,
+                            instrument_list_index, 'RF & MduP')
 
     return master_database_list

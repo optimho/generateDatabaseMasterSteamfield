@@ -12,12 +12,16 @@ def read_workbook(filename, dropNum, headerNum):
         sheet_name = xl.sheet_names[0]
 
         # Read the sheet into a pandas DataFrame and change NANs to empty strings
+        # -1 = don't use any header
+        # n = use the nth row as the header
         if (headerNum == -1):
             df = pd.read_excel(filename, sheet_name=sheet_name).fillna('')
         else:
             df = pd.read_excel(filename, sheet_name=sheet_name, header=headerNum).fillna('')
 
         # Assuming dataframe is your Pandas DataFrame and row_index is the index of the row you want to drop
+        # -1 = don't drop any rows
+        # n = drop the nth row
         if dropNum == -1:
             return df
         else:
