@@ -62,6 +62,9 @@
 """
 import datetime as dt
 
+from numpy.distutils.fcompiler import str2bool
+
+
 def station_name(master_database_list, database_list_index, name):
     """
     #0 Station Name = name
@@ -84,11 +87,8 @@ def system_name(master_database_list, database_list_index):
     :param instrument_list_index:
     :return: master_database_list with the system name set from the master instrument list
     """
-
-    # kks_code = master_instrument_list.iloc[instrument_list_index, 3][1:]
-    # master_database_list.iat[database_list_index, 1] = \
-    #     str(master_instrument_list.iloc[instrument_list_index, 15]) + ' ' + \
-    #     kks_systems[kks_code]
+    master_database_list.iat[database_list_index, 1] = master_database_list.iat[database_list_index, 3] + ' ' + \
+                                                       master_database_list.iat[database_list_index, 1]
 
     return master_database_list
 
@@ -121,7 +121,9 @@ def point_name(master_database_list, database_list_index):
     :return: master_database_list
     """
 
-    # master_database_list.iat[database_list_index, 3] = \
+    master_database_list.iat[database_list_index, 3] = str(master_database_list.iat[database_list_index, 3]) + \
+         ' - ' + str(master_database_list.iat[database_list_index, 35]).split()[0]
+
     #     str(master_instrument_list.iloc[instrument_list_index, 15]) + " " + \
     #     str(master_instrument_list.iloc[instrument_list_index, 16])
 
@@ -161,7 +163,7 @@ def device_model(master_database_list, database_list_index):
     return master_database_list
 
 
-def criticality(master_database_list, database_list_index):
+def criticality(master_database_list, database_list_index, val):
     """
     #6 criticality = ?
     does nothing at present
@@ -180,7 +182,7 @@ def criticality(master_database_list, database_list_index):
     return master_database_list
 
 
-def resource_consent(master_database_list, database_list_index):
+def resource_consent(master_database_list, database_list_index, val):
     """
     #7 resource concent = ?
     does nothing at present
@@ -199,7 +201,7 @@ def resource_consent(master_database_list, database_list_index):
     return master_database_list
 
 
-def pcpr(master_database_list, database_list_index):
+def pcpr(master_database_list, database_list_index, val):
     """
     Could be used for SIS
     #8 PCPR = ?
@@ -218,7 +220,7 @@ def pcpr(master_database_list, database_list_index):
     return master_database_list
 
 
-def kpi(master_database_list, database_list_index):
+def kpi(master_database_list, database_list_index, val):
     """
     #9 kpi = ?
     does nothing at present
@@ -410,10 +412,9 @@ def notes(master_database_list, database_list_index):
     #
     return master_database_list
 
-
-def date(master_database_list, database_list_index):
+def checked(master_database_list, database_list_index):
     """
-    #48 date
+    #42 checked
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -421,14 +422,27 @@ def date(master_database_list, database_list_index):
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 48] = dt.date.today()
+    master_database_list.iat[database_list_index, 42] = str2bool("no")
 
     return master_database_list
 
+def date(master_database_list, database_list_index):
+    """
+    #43 date
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with date set
+    """
+
+    master_database_list.iat[database_list_index, 43] = dt.date.today()
+
+    return master_database_list
 
 def who(master_database_list, database_list_index, val):
     """
-    #49 who updated
+    #44 who updated
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -436,6 +450,33 @@ def who(master_database_list, database_list_index, val):
     :return: master database list with whom upated
     """
 
-    master_database_list.iat[database_list_index, 49] = val
+    master_database_list.iat[database_list_index, 44] = val
+
+    return master_database_list
+def changed(master_database_list, database_list_index):
+    """
+    #45 changed
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with date set
+    """
+
+    master_database_list.iat[database_list_index, 45] = str2bool("no")
+
+    return master_database_list
+
+def calculation_error(master_database_list, database_list_index):
+    """
+    #46 calculatiion error
+    :param master_database_list:
+    :param database_list_index:
+    :param master_instrument_list:
+    :param instrument_list_index:
+    :return: master database list with date set
+    """
+
+    master_database_list.iat[database_list_index, 46] = str2bool("no")
 
     return master_database_list

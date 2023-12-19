@@ -23,7 +23,7 @@ def test_read_database_master(database_data):
     assert result.iloc[0, 15] == "0110LFC10CL010"
 
 def test_output_database_master_system(database_data):
-    print (database_data.iloc[0, 1] + ' ' + database_data.iloc[0, 2])
+    assert (database_data.iloc[0, 1] + ' ' + database_data.iloc[0, 2]) == 'Wellpad TH11 Common Steam/Water Dump System 10CL010'
 
 
 # def test_excel_to_dict():

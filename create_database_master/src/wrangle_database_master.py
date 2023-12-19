@@ -239,11 +239,12 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
 
     return master_database_list
 
-def modify_database_list(database_list: pd, version: str):
+def modify_database_list(master_list: pd, database_list: pd, version: str):
     # Takes the new instrument lists(can be blank for this function), checks the exsisting database lists
     # updates the database master as required
     # can easily be used to import into the new instrument database
 
+    master_instrument_list = master_list
     master_database_list = database_list
 
 
@@ -317,10 +318,19 @@ def modify_database_list(database_list: pd, version: str):
             # 19 test notes:
             mod.notes(master_database_list, database_list_index)
 
-            # 48 date of update:
+            # 42 test notes:
+            mod.checked(master_database_list, database_list_index)
+
+            # 43 date of update:
             mod.date(master_database_list, database_list_index)
 
-            # 48 updater:
+            # 44 updater:
             mod.who(master_database_list, database_list_index, 'RF & MduP')
+
+            # 45 changed
+            mod.changed(master_database_list, database_list_index)
+
+            #46 calculationError
+            mod.calculation_error(master_database_list, database_list_index)
 
     return master_database_list

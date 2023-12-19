@@ -21,14 +21,13 @@ from create_database_master.src import excel_to_dict as ed
 # TODO select for full list
 # file_path = '../data/database_master.xlsx'  # Replace this with the path to your workbook 1
 # TODO select for reducest list for testing
-file_path = '../data/database_master_shortList.xlsx'  # Replace this with the path to your workbook 1
+file_path = '../data/Templates Entry Instrument Data.xlsx'  # Replace this with the path to your workbook 1
+
 instrument_data_list_df = xl.read_workbook(file_path, -1, 0)
 
 # read instrument master lists|
-# TODO select for full list
-# file_path = '../data/instrument_master.xlsx'  # Replace this with the path to your workbook 2
-# TODO select for reducest list for testing
-file_path = '../data/instrument_master_shortList.xlsx'  # Replace this with the path to your workbook 2
+#
+file_path = '../data/TABG-CEL-0-000-CCI-LST-1401_7.8.xlsx'  # Replace this with the path to your workbook 2
 instrument_master_list_df = xl.read_workbook(file_path, -1, 0)
 
 # read the list of KKS SYSTEM codes from an Excel spreadsheet
@@ -40,7 +39,7 @@ kks_system_dict = ed.excel_to_dict(file_path)
 version: str = '3.0'
 
 # Wrangle  data
-xl.create_excel_from_dataframe(wr.modify_database_list(instrument_data_list_df, version),
+xl.create_excel_from_dataframe(wr.modify_database_list(instrument_master_list_df, instrument_data_list_df, version),
                                f'../data/generated_database_v{version}.xlsx')
 
 if instrument_master_list_df is not None:
