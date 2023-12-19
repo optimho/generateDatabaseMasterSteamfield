@@ -8,7 +8,7 @@ for Contact Energy's device database.
 import numpy as np
 import pandas as pd
 from create_database_master.src import wrangle_functions as connect
-
+from create_database_master.src import modify_functions as mod
 
 def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict, version: str):
     # Takes the new instrument lists, checks the exsisting database lists
@@ -237,5 +237,91 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
                 # 48 updater:
                 connect.who(master_database_list, database_list_index, master_instrument_list,
                             instrument_list_index, 'RF & MduP')
+
+    return master_database_list
+
+def modify_database_list(database_list: pd, version: str):
+    # Takes the new instrument lists(can be blank for this function), checks the exsisting database lists
+    # updates the database master as required
+    # can easily be used to import into the new instrument database
+
+    master_database_list = database_list
+
+
+    for database_list_index in range(master_database_list.shape[0]):
+
+            # Check the kks numbers in both lists -- check what indexes should be set 0 is default  #####
+            ####  TODO _ NOTE {This is an essential part - compares a unique cell in both workbooks }##################
+            ####  TODO _ NOTE {The number at the end indictes the column                            }##################
+            ####  TODO _ NOTE {of the cells in the Dataframe to compare                             }##################
+
+
+            ######## WRANGLE DATA HERE ###########  TODO      ###########################################
+            #
+            # 0 Station Name
+            mod.station_name(master_database_list, database_list_index, name="Tauhara B Steamfield")
+
+            # 1 System
+            mod.system_name(master_database_list, database_list_index)
+
+            # 2 Tag
+            mod.tag(master_database_list, database_list_index)
+
+            # 3 Point name
+            mod.point_name(master_database_list, database_list_index)
+
+            # 4 Function
+            mod.function(master_database_list, database_list_index)
+
+            # 5 Type
+            mod.device_model(master_database_list, database_list_index)
+
+            # 6 criticality = ? not yet implemented
+            mod.criticality(master_database_list, database_list_index, val="")
+
+            # 7 Resource Consent = ? not yet implemented
+            mod.resource_consent(master_database_list, database_list_index, val="")
+
+            # 8 PCPR = ? not yet implemented
+            mod.pcpr(master_database_list, database_list_index, val="")
+
+            # 9 KPI = ? not implemented yet
+            mod.kpi(master_database_list, database_list_index, val="")
+
+            # 10 Nominal operating value
+            mod.nominal_operating_value(master_database_list, database_list_index)
+
+            # 11 setting range
+            mod.setting_range(master_database_list, database_list_index)
+
+            # 12 Device range
+            mod.device_range(master_database_list, database_list_index)
+
+            # 13 Device Type TODO: this needs work
+            mod.device_type(master_database_list, database_list_index)
+
+            # 14 Device proof TODO: this needs work
+            mod.device_proof(master_database_list, database_list_index)
+
+            # 15 plant code (KKS):
+            mod.plant_code(master_database_list, database_list_index)
+
+            # 16 data:
+            mod.data(master_database_list, database_list_index)
+
+            # 17 store number:
+            mod.order(master_database_list, database_list_index)
+
+            # 18 drawin number:
+            mod.drawg(master_database_list, database_list_index)
+
+            # 19 test notes:
+            mod.notes(master_database_list, database_list_index)
+
+            # 48 date of update:
+            mod.date(master_database_list, database_list_index)
+
+            # 48 updater:
+            mod.who(master_database_list, database_list_index, 'RF & MduP')
 
     return master_database_list
