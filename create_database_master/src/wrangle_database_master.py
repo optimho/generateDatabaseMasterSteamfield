@@ -2,7 +2,6 @@
 Compares the master instrument dataframe and creates a database master dataframe
 This is used to create an Excel spreadsheet to import into an access database
 for Contact Energy's device database.
-
 """
 
 import numpy as np
