@@ -61,7 +61,7 @@
 
 """
 import datetime as dt
-
+import pandas as pd
 from numpy.distutils.fcompiler import str2bool
 
 
@@ -305,7 +305,7 @@ def device_type(master_database_list, database_list_index):
 
 def device_proof(master_database_list, database_list_index):
     """
-    #14 device accuracy = depends on #31 parameter
+    #12 device accuracy = depends on #31 parameter
     proof is an accuracy eg value +/- 1%
     :param master_database_list:
     :param database_list_index:
@@ -315,8 +315,7 @@ def device_proof(master_database_list, database_list_index):
     TODO need to fix this device type is a number to a table that has a list of devices
     """
 
-    # master_instrument_list.iloc[instrument_list_index, 31] = '+/- 2.5%'
-
+    master_database_list.iat[database_list_index, 12] = "+/- 1.5%"
     return master_database_list
 
 
@@ -331,7 +330,6 @@ def plant_code(master_database_list, database_list_index):
     :return: master database, with no changes
 
     """
-    pass
     # master_database_list.iat[database_list_index, 13] = \
     # master_instrument_list.iloc[instrument_list_index, ]
 
@@ -354,9 +352,10 @@ def data(master_database_list, database_list_index):
     return master_database_list
 
 
-def order(master_database_list, database_list_index):
+
+def order(master_instrument_list, master_database_list, database_list_index):
     """
-    #17 store number = #39 purchase order number
+    #17 order
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -364,8 +363,13 @@ def order(master_database_list, database_list_index):
     :return: master database list with drawing number set
     """
 
-    # master_database_list.iat[database_list_index, 17] = \
-    #     'PO# ' + str(master_instrument_list.iloc[instrument_list_index, 39])
+    # The value you are looking for
+    value_to_find = master_database_list.iat[database_list_index, 38]
+    result_index = master_instrument_list.index[master_instrument_list['TAG NUMBER'] == value_to_find].tolist()
+    print(result_index[0])
+
+    master_database_list.iat[database_list_index, 40] = 'PO# ' + str(master_instrument_list.iloc[result_index[0], 39])
+
 
     return master_database_list
 
@@ -386,7 +390,7 @@ def drawg(master_database_list, database_list_index):
     return master_database_list
 
 
-def notes(master_database_list, database_list_index):
+def notes(master_instrument_list, master_database_list, database_list_index):
     """
     #19 notes to tester = 'rev:' + #35 /n
                           'make:' + #37 /n
@@ -403,12 +407,12 @@ def notes(master_database_list, database_list_index):
 
     # master_database_list.iat[database_list_index, 19] = 'rev: ' + \
     #                                                     str(master_instrument_list.iloc[
-    #                                                             instrument_list_index, 35]) + ' \nmake: ' + \
+    #                                                             database_list_index, 35]) + ' \nmake: ' + \
     #                                                     str(master_instrument_list.iloc[
-    #                                                             instrument_list_index, 37]) + ' \ninstall: ' + \
+    #                                                             database_list_index, 37]) + ' \ninstall: ' + \
     #                                                     str(master_instrument_list.iloc[
-    #                                                             instrument_list_index, 34]) + ' \ndrwg: ' + \
-    #                                                     str(master_instrument_list.iloc[instrument_list_index, 31])
+    #                                                             database_list_index, 34]) + ' \ndrwg: ' + \
+    #                                                     str(master_instrument_list.iloc[database_list_index, 31])
     #
     return master_database_list
 

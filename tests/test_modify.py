@@ -16,6 +16,21 @@ def wrangle_data():
     database_dat = database_data
     wr.modify_database_list(database_dat, version='test')
 
+@pytest.fixture
+def instrument_data():
+    #read instrument master lists|
+    file_path = '../data/instrument_master_shortList.xlsx'  # Replace this with the path to your workbook 2
+    instrument_master_list_df = xl.read_workbook(file_path, -1, 0)
+    return instrument_master_list_df
+
+def test_read_instrument_master(instrument_data):
+    """
+    :param instrument_data:
+    :assert: if the instrument data is correctly read
+    """
+    result = instrument_data
+    assert result.iloc[0, 10] == "0110LFC10CL010"
+
 def test_lines_database_master(database_data):
     assert len(database_data) == 6
 def test_read_database_master(database_data):
@@ -24,7 +39,6 @@ def test_read_database_master(database_data):
 
 def test_output_database_master_system(database_data):
     assert (database_data.iloc[0, 1] + ' ' + database_data.iloc[0, 2]) == 'Wellpad TH11 Common Steam/Water Dump System 10CL010'
-
 
 # def test_excel_to_dict():
 #     file_path = '../data/KKS_Systems.xlsx'

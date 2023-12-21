@@ -310,13 +310,13 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             mod.data(master_database_list, database_list_index)
 
             # 17 store number:
-            mod.order(master_database_list, database_list_index)
+            mod.order(master_instrument_list, master_database_list, database_list_index)
 
             # 18 drawin number:
             mod.drawg(master_database_list, database_list_index)
 
             # 19 test notes:
-            mod.notes(master_database_list, database_list_index)
+            mod.notes(master_instrument_list, master_database_list, database_list_index)
 
             # 42 test notes:
             mod.checked(master_database_list, database_list_index)
