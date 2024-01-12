@@ -53,7 +53,7 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
                                    instrument_list_index)
 
                 # 4 Function
-                connect.function(master_database_list, database_list_index, master_instrument_list,
+                connect.funct(master_database_list, database_list_index, master_instrument_list,
                                  instrument_list_index)
 
                 # 5 Type
@@ -168,7 +168,7 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
                                    instrument_list_index)
 
                 # 4 Function
-                connect.function(master_database_list, database_list_index, master_instrument_list,
+                connect.funct(master_database_list, database_list_index, master_instrument_list,
                                  instrument_list_index)
 
                 # 5 Type
@@ -271,7 +271,7 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             mod.point_name(master_database_list, database_list_index)
 
             # 4 Function
-            mod.function(master_database_list, database_list_index)
+            mod.funct(master_database_list, database_list_index)
 
             # 5 Type
             mod.device_model(master_database_list, database_list_index)
@@ -316,7 +316,7 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             mod.drawg(master_database_list, database_list_index)
 
             # 19 test notes:
-            mod.notes(master_instrument_list, master_database_list, database_list_index)
+            mod.procs(master_instrument_list, master_database_list, database_list_index)
 
             # 42 test notes:
             mod.checked(master_database_list, database_list_index)

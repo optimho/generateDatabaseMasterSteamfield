@@ -32,4 +32,6 @@ instrument_master and have less records for testing.
 
 The program also has a series of pytest test functions and is an example of creating fixtures and pytests.
 
-Run/execute the generate_database_master.py file to run the program.
+Run/execute the modify_database_master.py file to run the program.
+After the file generated_datbase_v5.xlsx is created, it can be imported into the company database
+after removing the index coloumn and the point column. 

@@ -1,4 +1,5 @@
 """
+TODO deprecated
     connect signals from the master instrument datasheet(dataframe) to the master data frame.
 
             #~~Master Database fields
@@ -169,7 +170,7 @@ def point_name(master_database_list, database_list_index, master_instrument_list
     return master_database_list
 
 
-def function(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
+def funct(master_database_list, database_list_index, master_instrument_list, instrument_list_index):
     """
     #4 Function = #16 Parameter
     :param master_database_list:

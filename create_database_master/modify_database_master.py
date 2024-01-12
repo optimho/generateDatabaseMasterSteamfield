@@ -21,17 +21,17 @@ from create_database_master.src import excel_to_dict as ed
 # TODO select for full list
 # file_path = '../data/database_master.xlsx'  # Replace this with the path to your workbook 1
 # TODO select for reducest list for testing
-file_path = '../data/Templates Entry Instrument Data.xlsx'  # Replace this with the path to your workbook 1
+file_path = '../Data/Templates Entry Instrument Data.xlsx'  # Replace this with the path to your workbook 1
 
 instrument_data_list_df = xl.read_workbook(file_path, -1, 0)
 
 # read instrument master lists|
 #
-file_path = '../data/TABG-CEL-0-000-CCI-LST-1401_7.8.xlsx'  # Replace this with the path to your workbook 2
+file_path = '../Data/TABG-CEL-0-000-CCI-LST-1401_7.8.xlsx'  # Replace this with the path to your workbook 2
 instrument_master_list_df = xl.read_workbook(file_path, -1, 0)
 
 # read the list of KKS SYSTEM codes from an Excel spreadsheet
-file_path = '../data/KKS_Systems.xlsx'
+file_path = '../Data/KKS_SYSTEMS.xlsx'
 # kks_systems_df = xl.read_workbook(file_path, -1, 0)
 kks_system_dict = ed.excel_to_dict(file_path)
 

@@ -1,4 +1,6 @@
 """
+TODO Depreciate this function as it is not needed anymore.
+
 This script is to filter through the new and subsequent instrument lists
 and convert it into a database format that can be sucked into the Contact instrument database
 
