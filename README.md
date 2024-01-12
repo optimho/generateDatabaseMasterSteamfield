@@ -2,7 +2,8 @@
 generate_database_master
 This code was built for a specific purpose but could be tweaked for similar use.
 The use case here is there is two spreadsheets that contains information about installed instrumentation.
-One sheet was created by the installation crew and one was created by people collecting data for the project.
+One sheet was created by the installation crew (Instrument_Master) and one was created by people collecting 
+data for the project hence referred to as the database_master.
 the information may have originally come from the installation crew, but might have had a few revisions since.
 
 The one common cell is the KKS number, so the scripts matches the KKS number from both sheets and makes a new worksheet 
@@ -16,21 +17,18 @@ and pasted into the Contact Energy device database.
 The other half useful thing is that this is a good example of using tests in code and using pandas 
 for data manipulation. This script will be on github called generateDataBaseMaster
 
-The program opens two .xlsx files and matches records in one file to another based on a shared Cell. It then creates a new .xlsx file based on data in both files.
+The program opens two .xlsx files and matches records in one file to another based on a shared Cell. 
+It then creates a new .xlsx file called new 'device table.xlsx' based on data in both files.
 
-The program creates a file that can be imported into a company database using data from both files. The company database expects records in a specific format.
+The program creates a file that can be imported into a company database using data from both files. 
+The company database expects records in a specific format.
 
-With this program, cells can be copied from either workbook to create a new manipulated worksheet.
+In this case, there was already some information in the database_master file, and 
+the instrument_master was a newer version so that the resultant file would have the most up to date 
+information from the instrument master and some information preserved from the database master.
 
-The second workbook is in the format expected by the company database. The program will create new records in the second workbook if there is a matching record based on a single column/cell that was specified.
-
-If there is a matching record, that record will be altered in the second workbook using various data manipulation functions, concat, conditional checks and so on.
-
-Included in the project are example .xlxs files with sample data; the code will produce a file called generated_database.xlxs from two files instrument_master_shortList.xlsx, which is a spreadsheet with several industrial instrumentation devices with related information. The database_master_shortList.xlsx is the spreadsheet with the headers and datatypes the database requires.
-
-In this case, there was already some information in the database_master file, and the instrument_master was a newer version so that the resultant file would have the most up to date informtion from the instrument master and some information preserved from the database master.
-
-instrument_master_shortList.xlsx and database_master_shortList.xlsx are copies of database_master and instrument_master and have less records for testing.
+instrument_master_shortList.xlsx and database_master_shortList.xlsx are copies of database_master and 
+instrument_master and have less records for testing.
 
 The program also has a series of pytest test functions and is an example of creating fixtures and pytests.
 
