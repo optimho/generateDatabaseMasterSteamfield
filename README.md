@@ -34,4 +34,10 @@ The program also has a series of pytest test functions and is an example of crea
 
 Run/execute the modify_database_master.py file to run the program.
 After the file generated_datbase_v5.xlsx is created, it can be imported into the company database
-after removing the index coloumn and the point column. 
+after removing the index column. 
+
+Master sources:
+The Instrument master file is TABG-CEL-0-000-CCI-LST-1401_7.8.xlsx
+The database master file is Templates Entry Instrument Data (DEC  19) - Revision 2.xlsx
+For testing with a reduced number of records, use 'Templates Entry Instrument Data.xlsx'.
+

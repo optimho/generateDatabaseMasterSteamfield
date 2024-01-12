@@ -266,7 +266,7 @@ def device_proof(master_database_list, database_list_index):
     TODO need to fix this device type is a number to a table that has a list of devices
     """
 
-    master_database_list.iat[database_list_index, 12] = "+/- 1.0%"
+    master_database_list.iat[database_list_index, 12] = 1.0
     return master_database_list
 
 ##
@@ -315,15 +315,15 @@ def procs(master_instrument_list, master_database_list, database_list_index):
     #                                                             database_list_index, 34]) + ' \ndrwg: ' + \
     #                                                     str(master_instrument_list.iloc[database_list_index, 31])
 
-    master_database_list.iat[database_list_index, 19] = 'rev: ' \
-                                                        # + \
-                                                        # str(master_instrument_list.iloc[
-                                                        #         database_list_index, 35]) + ' \nmake: ' + \
-                                                        # str(master_instrument_list.iloc[
-                                                        #         database_list_index, 37]) + ' \ninstall: ' + \
-                                                        # str(master_instrument_list.iloc[
-                                                        #         database_list_index, 34]) + ' \ndrwg: ' + \
-                                                        # str(master_instrument_list.iloc[database_list_index, 31])
+    master_database_list.iat[database_list_index, 36] = 'rev: ' \
+                                                        + \
+                                                        str(master_instrument_list.iloc[
+                                                                database_list_index, 35]) + ' \nmake: ' + \
+                                                        str(master_instrument_list.iloc[
+                                                                database_list_index, 37]) + ' \ninstall: ' + \
+                                                        str(master_instrument_list.iloc[
+                                                                database_list_index, 34]) + ' \ndrwg: ' + \
+                                                        str(master_instrument_list.iloc[database_list_index, 31])
     return master_database_list
 def criticality(master_database_list, database_list_index, val):
     """
@@ -479,7 +479,7 @@ def changed(master_database_list, database_list_index):
 
 def calculation_error(master_database_list, database_list_index):
     """
-    #45 calculatiion error index
+    #46 calculatiion error index
     :param master_database_list:
     :param database_list_index:
     :param master_instrument_list:
@@ -487,6 +487,6 @@ def calculation_error(master_database_list, database_list_index):
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 46] = str2bool("yes")
+    master_database_list.iat[database_list_index, 46] = str2bool("No")
 
     return master_database_list

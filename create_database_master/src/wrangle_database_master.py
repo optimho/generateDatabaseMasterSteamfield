@@ -258,7 +258,7 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
 
             ######## WRANGLE DATA HERE ###########  TODO      ###########################################
             #
-            # 0 Station Name
+            # 1 Station Name
             mod.station_name(master_database_list, database_list_index, name="Tauhara B Steamfield")
 
             # 1 System
@@ -276,8 +276,10 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             # 5 Type
             mod.device_model(master_database_list, database_list_index)
 
-            # 6 criticality = ? not yet implemented
-            mod.criticality(master_database_list, database_list_index, val="")
+            # 6 Device range
+            mod.device_range(master_database_list, database_list_index)
+
+
 
             # 7 Resource Consent = ? not yet implemented
             mod.resource_consent(master_database_list, database_list_index, val="")
@@ -294,31 +296,31 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             # 11 setting range
             mod.setting_range(master_database_list, database_list_index)
 
-            # 12 Device range
-            mod.device_range(master_database_list, database_list_index)
-
-            # 13 Device Type TODO: this needs work
-            mod.device_type(master_database_list, database_list_index)
-
-            # 14 Device proof TODO: this needs work
+            # 12 Device proof
             mod.device_proof(master_database_list, database_list_index)
 
-            # 15 plant code (KKS):
-            mod.plant_code(master_database_list, database_list_index)
+            # 35 Device Type
+            mod.device_type(master_database_list, database_list_index)
 
-            # 16 data:
-            mod.data(master_database_list, database_list_index)
-
-            # 17 store number:
-            mod.order(master_instrument_list, master_database_list, database_list_index)
-
-            # 18 drawin number:
-            mod.drawg(master_database_list, database_list_index)
-
-            # 19 test notes:
+            # 36 test notes:
             mod.procs(master_instrument_list, master_database_list, database_list_index)
 
-            # 42 test notes:
+            # 37 criticality = ? not yet implemented
+            mod.criticality(master_database_list, database_list_index, val="")
+
+            # 38 plant code (KKS):
+            mod.plant_code(master_database_list, database_list_index)
+
+            # 39 data:
+            mod.data(master_database_list, database_list_index)
+
+            # 40 store number:
+            mod.order(master_instrument_list, master_database_list, database_list_index)
+
+            # 41 drawin number:
+            mod.drawg(master_database_list, database_list_index)
+
+            # 42 checked:
             mod.checked(master_database_list, database_list_index)
 
             # 43 date of update:

@@ -12,6 +12,8 @@ Put the sheets with the names of:
     We only want the single header at the top and no notes or anything irrelevant at the bottom of the
     sheet.
 
+    Read the README.md for more information.
+
 """
 
 from create_database_master.src import excel_io_dataframe as xl, wrangle_database_master as wr
@@ -36,7 +38,7 @@ file_path = '../Data/KKS_SYSTEMS.xlsx'
 kks_system_dict = ed.excel_to_dict(file_path)
 
 # Version of instrument master lists
-version: str = '3.0'
+version: str = '5.0'
 
 # Wrangle  data
 xl.create_excel_from_dataframe(wr.modify_database_list(instrument_master_list_df, instrument_data_list_df, version),
