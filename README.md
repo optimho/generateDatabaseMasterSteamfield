@@ -1,12 +1,26 @@
 # generate_instrument_database
 generate_database_master
 This code was built for a specific purpose but could be tweaked for similar use.
+The use case here is there is two spreadsheets that contains information about installed instrumentation.
+One sheet was created by the installation crew and one was created by people collecting data for the project.
+the information may have originally come from the installation crew, but might have had a few revisions since.
 
-The program opens two .xlsx files and matches records in one file to another based on a shared key. It then creates a new .xlsx file based on data in both files.
+The one common cell is the KKS number, so the scripts matches the KKS number from both sheets and makes a new worksheet 
+from information the is contained in the both of them, the installation crew worksheet is treated as the
+master. so if there is useful information put it into the new worksheet.
+
+Another problem was the sequence of the cells that the database requires is slightly different to both these
+work sheets, so the most useful use of this script is to arrange the cell order so that it can be copied
+and pasted into the Contact Energy device database.
+
+The other half useful thing is that this is a good example of using tests in code and using pandas 
+for data manipulation. This script will be on github called generateDataBaseMaster
+
+The program opens two .xlsx files and matches records in one file to another based on a shared Cell. It then creates a new .xlsx file based on data in both files.
 
 The program creates a file that can be imported into a company database using data from both files. The company database expects records in a specific format.
 
-With this program, cells can be copied from one workbook to the other or/and manipulated.
+With this program, cells can be copied from either workbook to create a new manipulated worksheet.
 
 The second workbook is in the format expected by the company database. The program will create new records in the second workbook if there is a matching record based on a single column/cell that was specified.
 
