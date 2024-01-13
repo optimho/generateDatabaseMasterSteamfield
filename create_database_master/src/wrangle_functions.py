@@ -1,7 +1,7 @@
 """
 TODO deprecated
     connect signals from the master instrument datasheet(dataframe) to the master data frame.
-
+FIXME depreciate this code
             #~~Master Database fields
             #0 Stations Name
             #1 System

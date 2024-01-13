@@ -3,6 +3,7 @@ Compares the master instrument dataframe and creates a database master dataframe
 This is used to create an Excel spreadsheet to import into an access database
 for Contact Energy's device database.
 """
+import logging
 
 import numpy as np
 import pandas as pd
@@ -272,36 +273,24 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
 
             # 4 Function
             mod.funct(master_database_list, database_list_index)
-
             # 5 Type
             mod.device_model(master_database_list, database_list_index)
-
             # 6 Device range
             mod.device_range(master_database_list, database_list_index)
-
-
-
             # 7 Resource Consent = ? not yet implemented
             mod.resource_consent(master_database_list, database_list_index, val="")
-
             # 8 PCPR = ? not yet implemented
             mod.pcpr(master_database_list, database_list_index, val="")
-
             # 9 KPI = ? not implemented yet
             mod.kpi(master_database_list, database_list_index, val="")
-
             # 10 Nominal operating value
             mod.nominal_operating_value(master_database_list, database_list_index)
-
             # 11 setting range
             mod.setting_range(master_database_list, database_list_index)
-
             # 12 Device proof
             mod.device_proof(master_database_list, database_list_index)
-
             # 35 Device Type
             mod.device_type(master_database_list, database_list_index)
-
             # 36 test notes:
             mod.procs(master_instrument_list, master_database_list, database_list_index)
 
@@ -335,4 +324,9 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             #46 calculationError
             mod.calculation_error(master_database_list, database_list_index)
 
+    #Add missing columns (run this second last function
+    master_database_list = mod.add_missing_columns(master_database_list, database_list_index)
+
+    # reoder the columns in the dataframe
+    master_database_list = mod.presenation(master_database_list, database_list_index)
     return master_database_list

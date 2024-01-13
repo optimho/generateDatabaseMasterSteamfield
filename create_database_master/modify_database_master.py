@@ -23,7 +23,7 @@ from create_database_master.src import excel_to_dict as ed
 # TODO select for full list
 # file_path = '../data/database_master.xlsx'  # Replace this with the path to your workbook 1
 # TODO select for reducest list for testing
-file_path = '../Data/Templates Entry Instrument Data.xlsx'  # Replace this with the path to your workbook 1
+file_path = '../Data/Templates Entry Instrument Full.xlsx'  # Replace this with the path to your workbook 1
 
 instrument_data_list_df = xl.read_workbook(file_path, -1, 0)
 
@@ -38,7 +38,7 @@ file_path = '../Data/KKS_SYSTEMS.xlsx'
 kks_system_dict = ed.excel_to_dict(file_path)
 
 # Version of instrument master lists
-version: str = '5.0'
+version: str = '6.0'
 
 # Wrangle  data
 xl.create_excel_from_dataframe(wr.modify_database_list(instrument_master_list_df, instrument_data_list_df, version),
