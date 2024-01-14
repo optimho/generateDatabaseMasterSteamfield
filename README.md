@@ -41,3 +41,16 @@ The Instrument master file is TABG-CEL-0-000-CCI-LST-1401_7.8.xlsx
 The database master file is Templates Entry Instrument Data (DEC  19) - Revision 2.xlsx
 For testing with a reduced number of records, use 'Templates Entry Instrument Data.xlsx'.
 
+The database master file has a small bit of work done to it.
+Remove the first row, to do this select the first row and right click and select delete.
+Then remove the index column, to do this select the first column cntr 'L' to remove the 
+filter and then click header off. then you can delete the first row.
+
+Then save the file as a Templates Entry Instrument Full.xlsx file.
+This file is used for converting to a file called generated_database_v6.0.xlsx
+
+generated_database_v6.0.xlsx can be used to copy into the device database.
+
+
+
+
