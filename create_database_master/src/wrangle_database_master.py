@@ -298,7 +298,7 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             mod.criticality(master_database_list, database_list_index, val="")
 
             # 38 plant code (KKS):
-            mod.plant_code(master_database_list, database_list_index)
+            mod.plant_code(master_instrument_list, master_database_list, database_list_index)
 
             # 39 data:
             mod.data(master_database_list, database_list_index)

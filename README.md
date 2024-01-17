@@ -1,5 +1,6 @@
 # generate_instrument_database
-generate_database_master
+generate_database_master by running make_database_master.py script
+
 This code was built for a specific purpose but could be tweaked for similar use.
 The use case here is there is two spreadsheets that contains information about installed instrumentation.
 One sheet was created by the installation crew (Instrument_Master) and one was created by people collecting 

@@ -356,7 +356,7 @@ def criticality(master_database_list, database_list_index, val):
 
 
 
-def plant_code(master_database_list, database_list_index):
+def plant_code(master_instrument_list, master_database_list, database_list_index):
     """
     #38 plant code =
     This fuction does nothing and is here for a future feature
@@ -367,12 +367,11 @@ def plant_code(master_database_list, database_list_index):
     :return: master database, with no changes
 
     """
-    # master_database_list.iat[database_list_index, 38] = \
-    #     master_database_list.iat[database_list_index, 38]
-    #
-    #
-    # \
-    # master_instrument_list.iloc[instrument_list_index, ]
+
+    front =master_database_list.iat[database_list_index, 38]
+
+    #back = master_instrument_list.iloc[database_list_index, 1]
+    master_database_list.iat[database_list_index, 38] = 'TH00' + front
 
     return master_database_list
 
