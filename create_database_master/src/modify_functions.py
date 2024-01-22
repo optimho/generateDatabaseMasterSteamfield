@@ -55,6 +55,16 @@ from numpy.distutils.fcompiler import str2bool
 import logging
 unique_devices = set()
 
+def str_to_bool(s):
+    """Convert a string to a boolean."""
+    if s.lower() in ['true', 't', 'yes', 'y', '1']:
+        return True
+    elif s.lower() in ['false', 'f', 'no', 'n', '0']:
+        return False
+    else:
+        raise ValueError(f"Cannot convert {s} to a boolean.")
+
+
 def station_name(master_database_list, database_list_index, name):
     """
     #0 Station Name = name
@@ -197,7 +207,7 @@ def resource_consent(master_database_list, database_list_index, val):
     TODO Implement criticality calculation
     """
 
-    master_database_list.iat[database_list_index, 7] = 'NO'
+    master_database_list.iat[database_list_index, 7] = str_to_bool('no')
     # master_instrument_list.iloc[instrument_list_index,?]
 
     return master_database_list
@@ -216,7 +226,7 @@ def pcpr(master_database_list, database_list_index, val):
     :return: master database list
     """
 
-    master_database_list.iat[database_list_index, 8] = 'NO'
+    master_database_list.iat[database_list_index, 8] = str_to_bool('no')
     # master_instrument_list.iloc[instrument_list_index, ]
 
     return master_database_list
@@ -234,7 +244,7 @@ def kpi(master_database_list, database_list_index, val):
     :return: master database list
     TODO Implement criticality calculation
     """
-    master_database_list.iat[database_list_index, 9] = 'NO'
+    master_database_list.iat[database_list_index, 9] = str_to_bool('no')
 
     return master_database_list
 
@@ -264,11 +274,6 @@ def setting_range(master_database_list, database_list_index):
     :param instrument_list_index:
     :return: master database list with the nominal operating point set
     """
-
-    # master_database_list.iat[database_list_index, 11] = \
-    #     master_instrument_list.iloc[instrument_list_index, 23]
-
-    #     master_instrument_list.iloc[instrument_list_index, 30]
 
     return master_database_list
 
@@ -352,11 +357,9 @@ def procs(master_instrument_list, master_database_list, database_list_index):
                             str(master_instrument_list.iat[result_index[0], 31]) + '\nline # ' + \
                             str(master_instrument_list.at[result_index[0], "Line Number"]))
 
-
-
-    except:
-        logging.warning(f'Error in procs function')
-        logging.warning(f' There is a problem with this Tag -- investigate{value_to_find}')
+    except Exception as e:
+        logging.warning(f'Error in procs function {e}')
+        logging.warning(f' There is a problem with this Tag -- investigate {value_to_find}')
         master_database_list.at[database_list_index, "Procs"] = ''
 
     return master_database_list
@@ -477,7 +480,7 @@ def checked(master_database_list, database_list_index):
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 42] = str2bool("no")
+    master_database_list.iat[database_list_index, 42] = str_to_bool("no")
 
     return master_database_list
 
@@ -518,7 +521,7 @@ def changed(master_database_list, database_list_index):
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 45] = str2bool("no")
+    master_database_list.iat[database_list_index, 45] = str_to_bool("no")
 
     return master_database_list
 
@@ -532,7 +535,7 @@ def calculation_error(master_database_list, database_list_index):
     :return: master database list with date set
     """
 
-    master_database_list.iat[database_list_index, 46] = str2bool("No")
+    master_database_list.iat[database_list_index, 46] = str_to_bool("no")
 
     return master_database_list
 
