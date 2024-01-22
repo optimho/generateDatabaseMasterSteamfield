@@ -339,15 +339,20 @@ def procs(master_instrument_list, master_database_list, database_list_index):
         logging.warning(f' the matching index found is {result_index[0]}')
         logging.warning(f'The matched value in masterDB {master_instrument_list.at[result_index[0], "TAG NUMBER"]}')
         logging.warning(f' ------')
-        master_database_list.at[database_list_index, "Procs"] = 'rev: ' \
-                                                        + \
-                                                        str(master_instrument_list.at[
-                                                                result_index[0], "REV"]) + ' \nmake: ' + \
-                                                        str(master_instrument_list.at[
-                                                                 result_index[0], "MAKE"]) + ' \nVendor: ' + \
-                                                        str(master_instrument_list.at[
-                                                                 result_index[0], "VENDOR"]) + ' \ndrwg: ' + \
-                                                        str(master_instrument_list.iat[result_index[0], 31])
+        master_database_list.at[database_list_index, "Procs"] = ('rev: ' \
+                            + \
+                            str(master_instrument_list.at[
+                            result_index[0], "REV"]) + '\ninstment type: ' + \
+                            str(master_instrument_list.at[
+                            result_index[0], "INSTRUMENT TYPE"]) + ' \nmake: ' + \
+                            str(master_instrument_list.at[
+                            result_index[0], "MAKE"]) + ' \nVendor: ' + \
+                            str(master_instrument_list.at[
+                            result_index[0], "VENDOR"]) + ' \ndrwg: ' + \
+                            str(master_instrument_list.iat[result_index[0], 31]) + '\nline # ' + \
+                            str(master_instrument_list.at[result_index[0], "Line Number"]))
+
+
 
     except:
         logging.warning(f'Error in procs function')
