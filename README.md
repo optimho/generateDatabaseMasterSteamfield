@@ -52,6 +52,11 @@ This file is used for converting to a file called generated_database_v6.0.xlsx
 
 generated_database_v6.0.xlsx can be used to copy into the device database.
 
+A few things to check, have you got the same amount of EXCEL rows in the output file as you had in the 
+data file, if not then there was some duplication in the data file.
 
+check to see if !@! symbol has not been prefixed to the system name, this is a flag to say that the system has
+a duplicated system name as well as a duplicated tag number.
+Manually fix these errors.
 
 
