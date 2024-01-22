@@ -53,8 +53,8 @@ import datetime as dt
 import pandas as pd
 from numpy.distutils.fcompiler import str2bool
 import logging
+unique_devices = set()
 
-logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 def station_name(master_database_list, database_list_index, name):
     """
     #0 Station Name = name
@@ -67,7 +67,7 @@ def station_name(master_database_list, database_list_index, name):
     return master_database_list
 
 
-def system_name(master_database_list, database_list_index):
+def system_name(master_database_list, kks_system, database_list_index):
     """
     #1 System = System
     :param kks_systems: a dictionary of kks systems descriptions (ADA, ADB, .. ect)
@@ -77,11 +77,28 @@ def system_name(master_database_list, database_list_index):
     :param instrument_list_index:
     :return: master_database_list with the system name set from the master instrument list
     """
+
+
     master_database_list.iat[database_list_index, 1] = master_database_list.iat[database_list_index, 3] + ' ' + \
                                                        master_database_list.iat[database_list_index, 1]
 
-    return master_database_list
+    try:
+        unique_device=master_database_list.iat[database_list_index, 1]+ ' - ' + \
+                                                        master_database_list.iat[database_list_index, 2]
 
+        logging.info(f' the unique device is {unique_device}')
+
+        if unique_device not in unique_devices:
+            unique_devices.add(unique_device)
+            logging.debug(f' the unique device is {unique_devices}')
+        else:
+            raise ValueError(f' Potential duplicate device ')
+
+    except:
+        logging.warning(f' duplicate device @ index {database_list_index}')
+        master_database_list.iat[database_list_index, 1] = '!@! ' + master_database_list.iat[database_list_index, 1]
+
+    return master_database_list
 
 def tag(master_database_list, database_list_index):
     """
@@ -291,7 +308,7 @@ def device_type(master_database_list, database_list_index):
 
     """
 
-    master_database_list.iat[database_list_index, 35] = ''
+    master_database_list.iat[database_list_index, 35] = '-edit-'
     # master_instrument_list.iloc[instrument_list_index, ]
 
     return master_database_list
@@ -311,28 +328,31 @@ def procs(master_instrument_list, master_database_list, database_list_index):
     :return:
     """
 
-    # master_database_list.iat[database_list_index, 19] = 'rev: ' + \
-    #                                                     str(master_instrument_list.iloc[
-    #                                                             database_list_index, 35]) + ' \nmake: ' + \
-    #                                                     str(master_instrument_list.iloc[
-    #                                                             database_list_index, 37]) + ' \ninstall: ' + \
-    #                                                     str(master_instrument_list.iloc[
-    #                                                             database_list_index, 34]) + ' \ndrwg: ' + \
-    #                                                     str(master_instrument_list.iloc[database_list_index, 31])
+    # The value you are looking for
+    value_to_find = master_database_list.iat[database_list_index, 38][4:]
+
 
     try:
-        master_database_list.iat[database_list_index, 36] = 'rev: ' \
+        result_index = master_instrument_list.index[master_instrument_list['TAG NUMBER'] == value_to_find]
+        logging.warning(f' ------')
+        logging.warning(f' the value to find is {value_to_find}')
+        logging.warning(f' the matching index found is {result_index[0]}')
+        logging.warning(f'The matched value in masterDB {master_instrument_list.at[result_index[0], "TAG NUMBER"]}')
+        logging.warning(f' ------')
+        master_database_list.at[database_list_index, "Procs"] = 'rev: ' \
                                                         + \
-                                                        str(master_instrument_list.iloc[
-                                                                database_list_index, 35]) + ' \nmake: ' + \
-                                                        str(master_instrument_list.iloc[
-                                                                database_list_index, 37]) + ' \ninstall: ' + \
-                                                        str(master_instrument_list.iloc[
-                                                                database_list_index, 34]) + ' \ndrwg: ' + \
-                                                        str(master_instrument_list.iloc[database_list_index, 31])
+                                                        str(master_instrument_list.at[
+                                                                result_index[0], "REV"]) + ' \nmake: ' + \
+                                                        str(master_instrument_list.at[
+                                                                 result_index[0], "MAKE"]) + ' \nVendor: ' + \
+                                                        str(master_instrument_list.at[
+                                                                 result_index[0], "VENDOR"]) + ' \ndrwg: ' + \
+                                                        str(master_instrument_list.iat[result_index[0], 31])
+
     except:
-        logging.error(f'Error in procs function')
-        master_database_list.iat[database_list_index, 36] =''
+        logging.warning(f'Error in procs function')
+        logging.warning(f' There is a problem with this Tag -- investigate{value_to_find}')
+        master_database_list.at[database_list_index, "Procs"] = ''
 
     return master_database_list
 
@@ -404,16 +424,24 @@ def order(master_instrument_list, master_database_list, database_list_index):
     :return: master database list with drawing number set
     """
 
-    try:
-        # The value you are looking for
-        value_to_find = master_database_list.iat[database_list_index, 38]
-        result_index = master_instrument_list.index[master_instrument_list['TAG NUMBER'] == value_to_find].tolist()
-        #print(result_index[0])
 
-        master_database_list.iat[database_list_index, 40] = 'PO# ' + str(master_instrument_list.iloc[result_index[0], 39])
+    # The value you are looking for
+    value_to_find = master_database_list.iat[database_list_index, 38][4:]
+    logging.info(f' the value to find is {value_to_find}')
+
+    try:
+        result_index = master_instrument_list.index[master_instrument_list['TAG NUMBER'] == value_to_find]
+        logging.info(f' the matching index found is {result_index[0]}')
+        logging.info(f'The matched value in masterDB {master_instrument_list.at[result_index[0], "TAG NUMBER"]}')
+        logging.info(f' a #PO value in master DB {master_instrument_list.iloc[result_index[0], 39]}')
+
+        master_database_list.iat[database_list_index, 40] = 'PO# ' + str(
+            master_instrument_list.iloc[result_index[0], 39])
+
     except:
-        logging.error(f'Error in order function')
-        master_database_list.iat[database_list_index, 40] = ' '
+            master_database_list.iat[database_list_index, 40] = ' '
+
+
     return master_database_list
 
 

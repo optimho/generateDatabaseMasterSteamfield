@@ -18,6 +18,8 @@ Put the sheets with the names of:
 
 from create_database_master.src import excel_io_dataframe as xl, wrangle_database_master as wr
 from create_database_master.src import excel_to_dict as ed
+import logging
+logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # read instrument Database lists|
 # TODO select for full list
@@ -41,8 +43,11 @@ kks_system_dict = ed.excel_to_dict(file_path)
 version: str = '6.0'
 
 # Wrangle  data
-xl.create_excel_from_dataframe(wr.modify_database_list(instrument_master_list_df, instrument_data_list_df, version),
+try:
+    xl.create_excel_from_dataframe(wr.modify_database_list(instrument_master_list_df, instrument_data_list_df, kks_system_dict,  version),
                                f'../data/generated_database_v{version}.xlsx')
+except:
+    logging.critical("Error generating database master file.")
 
 if instrument_master_list_df is not None:
     print("Dataframe contents:")

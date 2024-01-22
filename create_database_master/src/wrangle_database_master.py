@@ -4,7 +4,7 @@ This is used to create an Excel spreadsheet to import into an access database
 for Contact Energy's device database.
 """
 import logging
-
+logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
 import numpy as np
 import pandas as pd
 from create_database_master.src import wrangle_functions as connect
@@ -17,6 +17,8 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
 
     master_instrument_list = master_list
     master_database_list = database_list
+    unique_devices = set()
+    logging.warning(kks_systems)
 
     for instrument_list_index in range(master_instrument_list.shape[0]):
         device_is_listed = False
@@ -240,7 +242,7 @@ def wrangle_database_list(master_list: pd, database_list: pd, kks_systems: dict,
 
     return master_database_list
 
-def modify_database_list(master_list: pd, database_list: pd, version: str):
+def modify_database_list(master_list: pd, database_list: pd, kks_system, version: str):
     # Takes the new instrument lists(can be blank for this function), checks the exsisting database lists
     # updates the database master as required
     # can easily be used to import into the new instrument database
@@ -248,9 +250,7 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
     master_instrument_list = master_list
     master_database_list = database_list
 
-
     for database_list_index in range(master_database_list.shape[0]):
-
             # Check the kks numbers in both lists -- check what indexes should be set 0 is default  #####
             ####  TODO _ NOTE {This is an essential part - compares a unique cell in both workbooks }##################
             ####  TODO _ NOTE {The number at the end indictes the column                            }##################
@@ -261,16 +261,12 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             #
             # 1 Station Name
             mod.station_name(master_database_list, database_list_index, name="Tauhara B Steamfield")
-
             # 1 System
-            mod.system_name(master_database_list, database_list_index)
-
+            mod.system_name(master_database_list, kks_system, database_list_index)
             # 2 Tag
             mod.tag(master_database_list, database_list_index)
-
             # 3 Point name
             mod.point_name(master_database_list, database_list_index)
-
             # 4 Function
             mod.funct(master_database_list, database_list_index)
             # 5 Type
@@ -291,21 +287,16 @@ def modify_database_list(master_list: pd, database_list: pd, version: str):
             mod.device_proof(master_database_list, database_list_index)
             # 35 Device Type
             mod.device_type(master_database_list, database_list_index)
-            # 36 test notes:
-            mod.procs(master_instrument_list, master_database_list, database_list_index)
-
             # 37 criticality = ? not yet implemented
             mod.criticality(master_database_list, database_list_index, val="")
-
             # 38 plant code (KKS):
             mod.plant_code(master_instrument_list, master_database_list, database_list_index)
-
             # 39 data:
             mod.data(master_database_list, database_list_index)
-
             # 40 store number:
             mod.order(master_instrument_list, master_database_list, database_list_index)
-
+            # 36 test notes:
+            mod.procs(master_instrument_list, master_database_list, database_list_index)
             # 41 drawin number:
             mod.drawg(master_database_list, database_list_index)
 
