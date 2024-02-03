@@ -14,7 +14,9 @@ import create_database_master.src.duplicates as dup
 import src.excel_io_dataframe as xl
 import pandas as pd
 
-file_path = '../data/Steamfield_master_2024_02_03.xlsx'  # Replace this with the path to your workbook
+#file_path = '../data/Steamfield_master_2024_02_03.xlsx'  # Replace this with the path to your workbook
+file_path = '../data/generated_database_v6.0.xlsx'  # Replace this with the path to your workbook
+
 data_base = xl.read_workbook(file_path, -1, 0)
 #print(data_base.iloc[:5, 0:8])
 
